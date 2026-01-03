@@ -7,7 +7,7 @@ RGB images using a **U-Net–based autoencoder** built with
 **TensorFlow / Keras**.
 
 <p align="center">
-  <img src="results/sample_output.png" width="500">
+  <img src="results/result_1.png" width="500">
 </p>
 
 ---
