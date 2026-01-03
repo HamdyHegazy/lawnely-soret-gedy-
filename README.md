@@ -1,89 +1,133 @@
-# Face Colorization Using Deep Learning
+# 🧓 lawnely-soret-gedy-👴  
+### Face Colorization Using Deep Learning
 
-This project takes a grayscale image of a human face and predicts a
-realistic RGB (colorized) version using a deep neural network built with
-TensorFlow/Keras.
+**lawnely-soret-gedy-👴** is a deep learning project that automatically
+colorizes grayscale human face images and converts them into realistic
+RGB images using a **U-Net–based autoencoder** built with
+**TensorFlow / Keras**.
 
 <p align="center">
-  <img src="results/result_1.png" width="500">
+  <img src="results/sample_output.png" width="500">
 </p>
-
-## 🚀 Project Overview
-
--   Convert grayscale human face images to RGB color images\
--   Uses a deep convolutional encoder--decoder architecture\
--   Trained using TensorFlow/Keras\
--   Includes preprocessing, model training, evaluation, and
-    visualization\
--   Outputs realistic colorized face images
-
-## 📂 Project Structure
-
-    face-colorization-project/
-    │
-    ├── src/
-    │   └── face_colorization.ipynb     
-    │   └── image_colorization_model.keras    
-    │                   
-    │
-    ├── data/
-    │   └── README.md                   
-    │
-    ├── results/
-    │   └── sample_output.png           
-    │
-    ├── requirements.txt                
-    └── README.md                       
 
 ---
 
-## 🧠 Model Summary
+## 🚀 Project Overview
 
-The model is a convolutional encoder–decoder network that maps:
+- Converts grayscale face images into color (RGB)
+- Uses a **U-Net architecture as an autoencoder**
+- Trained end-to-end using TensorFlow / Keras
+- Includes preprocessing, training, evaluation, and visualization
+- Produces visually realistic face colorizations
 
-**Input:** 1-channel grayscale image  
-**Output:** 3-channel RGB image
+---
 
-The notebook contains:
+## 📂 Project Structure
 
-- Data preprocessing  
-- Model creation and training  
-- Loss/accuracy visualization  
-- Sample predictions and output visualization  
+```
+lawnely-soret-gedy-👴/
+│
+├── src/
+│   ├── face_colorization.ipynb
+│   └── image_colorization_model.keras
+│
+├── data/
+│   └── README.md
+│
+├── results/
+│   └── sample_output.png
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🧠 Model Architecture (U-Net Autoencoder)
+
+The model is based on a **U-Net architecture**, adapted to function as an
+**autoencoder for image colorization**.
+
+### How it works
+
+- The **encoder** takes a single-channel grayscale face image and
+  progressively downsamples it using convolutional layers, extracting
+  high-level facial features such as edges, structure, and texture.
+- The **decoder** upsamples the encoded representation back to the
+  original image resolution, predicting **three color channels (RGB)**.
+- **Skip connections** are used between corresponding encoder and decoder
+  layers to preserve spatial details, improving color consistency and
+  facial structure reconstruction.
+
+This design allows the network to combine **global context** with
+**fine-grained facial details**, resulting in more realistic and stable
+colorization results.
+
+**Input:**  
+- Grayscale image `(224 × 224 × 1)`
+
+**Output:**  
+- Color image `(224 × 224 × 3)`
 
 ---
 
 ## ▶️ How to Run
 
-1. Install dependencies:
+### 1️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-2. Load the trained model:
+
+---
+
+### 2️⃣ Load the Trained Model
 
 ```python
 from tensorflow.keras.models import load_model
-model = load_model("src/model.keras")
+
+model = load_model("src/image_colorization_model.keras")
 ```
 
-3. Use the model to colorize a grayscale image:
+---
+
+### 3️⃣ Colorize a Grayscale Image
 
 ```python
 import numpy as np
 import cv2
 
-# Load grayscale image
 img = cv2.imread("path/to/grayscale.jpg", cv2.IMREAD_GRAYSCALE)
 img = cv2.resize(img, (224, 224))
 img = img / 255.0
 img = np.expand_dims(img, axis=(0, -1))
 
-# Predict colorization
 pred = model.predict(img)
 pred = np.clip(pred[0], 0, 1)
 
-# Save output
 cv2.imwrite("results/colorized_output.jpg", pred * 255)
 ```
 
+---
+
+## 📌 Notes & Limitations
+
+- Designed primarily for **human face images**
+- The model predicts **plausible colors**, not exact ground truth
+- Performance depends heavily on dataset quality and diversity
+
+---
+
+## 🛠️ Tech Stack
+
+- Python
+- TensorFlow / Keras
+- OpenCV
+- NumPy
+- Matplotlib
+
+---
+
+## 📜 License
+
+This project is intended for **educational and research purposes only**.
